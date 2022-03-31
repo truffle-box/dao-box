@@ -5,7 +5,7 @@ module.exports = function  (deployer) {
   deployer.then(async () => {
     try {
       const token = await TruffleToken.deployed();
-      deployer.deploy(TruffleDAO, token.address, token.address);
+      await deployer.deploy(TruffleDAO, token.address, token.address);
 
       const dao = await TruffleDAO.deployed();
       console.log(`DAO deployed at: ${dao.address}`);
