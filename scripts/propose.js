@@ -3,14 +3,11 @@ const TruffleDAO = artifacts.require("TruffleDAO");
 
 const main = async (cb) => {
   try {
-    const accounts = await web3.eth.getAccounts();
-
     const token = await TruffleToken.deployed();
     const dao = await TruffleDAO.deployed();
+    const receipt = await dao.propose([token.address], [0], ['0x'], 'hello world');
 
-    await dao.propose([accounts[0]], [0], ['0x'], 'hello world')
-
-    console.log('Proposal created 🦄');
+    console.log('Proposal created 🦄: ', receipt.tx);
 
   } catch(err) {
     console.log('Doh! ', err.message);
