@@ -11,9 +11,19 @@ const main = async (cb) => {
     const dao = await TruffleDAO.deployed();
     const mint = await token.mint(accounts[0], 10000);
 
-    console.log('Tokens minted to 🦄: ', accounts[0],"transaction hash:", mint.tx);
+    console.log('Tokens minted to 🦄: ', accounts[0], "transaction hash:", mint.tx);
+    //get proposalID
 
-  } catch(err) {
+    let events = await dao.getPastEvents('ProposalCreated', { fromBlock: 0, toBlock: 'latest' })
+    //console.log("Events", events)
+    let propid = await events
+    let propString = JSON.stringify(propid)
+    let propParse = JSON.parse(propString)
+    let propId = propParse[0].returnValues.proposalId
+    const vote = await dao.castVote(propId, 1, {from:accounts[0]});
+    console.log("You've succesfully voted on the proposal!",vote.tx)
+
+  } catch (err) {
     console.log('Doh! ', err.message);
   }
   cb();
