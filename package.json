@@ -13,6 +13,6 @@
   "author": "ConsenSys Software Inc.",
   "license": "ISC",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.3.2"
+    "@openzeppelin/contracts": "4.5.0"
   }
 }

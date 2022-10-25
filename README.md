@@ -1,21 +1,113 @@
-# DAO Box
+# Truffle DAO Box
 
 Simple OpenZeppelin [Governor DAO](https://docs.openzeppelin.com/contracts/4.x/api/governance) example.
 
+- [Truffle DAO Box](#truffle-dao-box)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+  - [Installation](#installation)
+  - [Support](#support)
+
+## Requirements
+
+The DAO Box has the following requirements:
+
+- [Node.js](https://nodejs.org/) 10.x or later
+- [NPM](https://docs.npmjs.com/cli/) version 5.2 or later
+- Windows, Linux or MacOS
+
+Helpful, but optional:
+- An [Infura](https://infura.io/) account and Project ID
+- A [MetaMask](https://metamask.io/) account
+
+## Setup
+
 ## Installation
 
-```bash
-$ truffle unbox dao
-```
+First ensure you are in a new and empty directory.
+
+1. Run the `unbox` command via `npx` and skip to step 3. This will install all necessary dependencies. A Create-React-App is generated in the `client` directory.
+   ```js
+   npx truffle unbox dao-box
+   ```
+
+2. Alternatively, you can install Truffle globally and run the `unbox` command.
+    ```javascript
+    npm install -g truffle
+    truffle unbox dao-box
+    ```
+    
+3. In the root directory install the required dependices. This will install a few things along with [Open Zeppelin Contracts](https://docs.openzeppelin.com/contracts/4.x/erc721) check them out [here](https://docs.openzeppelin.com/contracts/4.x/erc721) for more info.
+   ```javascript
+      npm install @openzeppelin/contracts
+      ```
+      
+
+4. In the root directory install the required dependices. This will install a few things along with [Open Zeppelin Contracts](https://docs.openzeppelin.com/contracts/4.x/erc721) check them out [here](https://docs.openzeppelin.com/contracts/4.x/erc721) for more info.
+   ```javascript
+      npm install
+      ```
+
+5. Run the development console.
+    ```javascript
+    truffle develop
+    ```
+
+6. Compile and migrate the smart contracts. Note inside the development console we don't preface commands with `truffle`.
+    ```javascript
+    compile
+    migrate
+
+7. In the `client` directory, we run the React app. Smart contract changes must be manually recompiled and migrated.
+    ```javascript
+    // in another terminal (i.e. not in the truffle develop prompt)
+    cd client
+    npm install
+    npm run start
+    ```
+8. After migrating your contracts head run the scripts to create your first proposal and also vote on it!
+   ```javascript
+    truffle exec scripts/propose.js
+    truffle exec scripts/vote.js
+     ```
+
+9. You can check the developer console to see the transaction has and if you deploy to `rinkeby` you will be able to see the NFT on their test-net site [here](https://testnets.opensea.io/).
+
+10. To build the application for production, use the build script. A production build will be in the `client/build` folder.
+    ```javascript
+    // ensure you are inside the client directory when running this
+    npm run build
+    ```
 
 ## Deployment
 
+To deploy your contracts to a public network (such as a testnet or mainnet) there are two approaches. The first uses [Truffle Dashboard](https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-dashboard.html) which provides "an easy way to use your existing MetaMask wallet for your deployments". The second, requires copying your private key or mnemonic into your project so the deployment transactions can be signed prior to submission to the network.
+
+### Using Truffle Dashboard (recommended)
+
+Truffle Dashboard ships with Truffle and can be started with `truffle dashboard`. This in turn loads the dashboard at http://localhost:24012 and beyond that you'll just need to run your migration (`truffle migrate`). A more detailed guide to using Truffle Dashboard is available [here](https://trufflesuite.com/blog/introducing-truffle-dashboard/).
+
+### Using the env File
+
+You will need at least one mnemonic to use with the network. The `.dotenv` npm package has been installed for you, and you will need to create a `.env` file for storing your mnemonic and any other needed private information.
+
+The `.env` file is ignored by git in this project, to help protect your private data. In general, it is good security practice to avoid committing information about your private keys to github. The `truffle-config.js` file expects a `MNEMONIC` value to exist in `.env` for running commands on each of these networks, as well as a default `MNEMONIC` for the Arbitrum network we will run locally.
+
+If you are unfamiliar with using `.env` for managing your mnemonics and other keys, the basic steps for doing so are below:
+
+1) Use `touch .env` in the command line to create a `.env` file at the root of your project.
+2) Open the `.env` file in your preferred IDE
+3) Add the following, filling in your own Infura project key and mnemonics:
+
 ```
-truffle migrate
+MNEMONIC="<YOUR MNEMONIC HERE>"
+INFURA_KEY="<Your Infura Project ID>"
+RINKEBY_MNEMONIC="<Your Rinkeby Mnemonic>"
+MAINNET_MNEMONIC="<Your Mainnet Mnemonic>"
 ```
 
-## Interaction
+4) As you develop your project, you can put any other sensitive information in this file. You can access it from other files with `require('dotenv').config()` and refer to the variable you need with `process.env['<YOUR_VARIABLE>']`.
 
-```
-truffle exec scripts/propose.js
-```
+## Support
+
+Support for this box is available via the Truffle community available [here](https://www.trufflesuite.com/community).
